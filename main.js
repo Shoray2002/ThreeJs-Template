@@ -12,12 +12,12 @@ init();
 
 function init() {
   camera = new THREE.PerspectiveCamera(
-    50,
+    45,
     window.innerWidth / window.innerHeight,
     1,
-    1000
+    10000
   );
-  camera.position.set(0, 0, 200);
+  camera.position.set(100, 150, 110);
   renderer = new THREE.WebGLRenderer({
     canvas: document.getElementById("canvas"),
     antialias: true,
@@ -30,8 +30,9 @@ function init() {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.addEventListener("change", render);
   controls.screenSpacePanning = true;
-
-  //
+  controls.maxPolarAngle = Math.PI / 2;
+  controls.minDistance = 50;
+  controls.maxDistance = 400;
 
   window.addEventListener("resize", onWindowResize);
   guiData = {
@@ -49,9 +50,7 @@ function init() {
 
 function createGUI() {
   if (gui) gui.destroy();
-
   gui = new GUI();
-
   gui
     .add(guiData, "currentURL", {
       Road: "assets/road.svg",
@@ -72,15 +71,13 @@ function createGUI() {
     .add(guiData, "fillShapesWireframe")
     .name("Wireframe fill shapes")
     .onChange(update);
-
+  gui.hide();
   function update() {
     loadSVG(guiData.currentURL);
   }
 }
 
 function loadSVG(url) {
-  //
-
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xb0b0b0);
   scene.fog = new THREE.Fog(0xb0b0b0, 1, 2000);
@@ -125,9 +122,7 @@ function loadSVG(url) {
           group.add(mesh);
         }
       }
-
       const strokeColor = path.userData.style.stroke;
-
       if (
         guiData.drawStrokes &&
         strokeColor !== undefined &&
@@ -168,7 +163,6 @@ function loadSVG(url) {
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
