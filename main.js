@@ -1,15 +1,9 @@
-import "./style.css";
-import * as THREE from "three";
-import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
-
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js";
+import { GUI } from "./libs/lil-gui.module.min.js";
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+import { SVGLoader } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/SVGLoader.js";
 let renderer, scene, camera, gui, guiData;
-
 init();
-
-//
-
 function init() {
   camera = new THREE.PerspectiveCamera(
     45,
@@ -164,6 +158,7 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  loadSVG(guiData.currentURL);
 }
 
 function render() {
