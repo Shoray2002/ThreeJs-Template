@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 let renderer, scene, camera, cube,controls;
 init();
 animate();
